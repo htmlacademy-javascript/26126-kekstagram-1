@@ -12,8 +12,7 @@ const isPalindrome = (string) => {
   return false;
 };
 
-
-console.log(isPalindrome('Лёша на полке клопа нашёл '));
+isPalindrome('Лёша на полке клопа нашёл ');
 
 /* Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа. Если в строке нет ни одной цифры, функция должна вернуть NaN*/
 let newStringNumber = '';
@@ -32,7 +31,7 @@ const getCeilNumber = (data) => {
 
 
 };
-console.log(getCeilNumber('1 кефир, 0.5 батона'));
+getCeilNumber('1 кефир, 0.5 батона');
 
 /*Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами — и возвращает исходную строку, дополненную указанными символами до заданной длины. Символы добавляются в начало строки. Если исходная строка превышает заданную длину, она не должна обрезаться. Если «добивка» слишком длинная, она обрезается с конца.
 
@@ -64,7 +63,7 @@ const getAddressString = (initialString, minLength, addData) => {
   return newAddressString;
 };
 
-console.log(getAddressString('q', 4, 'we'));
+getAddressString('q', 4, 'we');
 
 //Функция для проверки длины строки.
 const checkStringLength = (string, maxLength) => {
@@ -74,5 +73,5 @@ const checkStringLength = (string, maxLength) => {
   return false;
 };
 
-console.log(checkStringLength('проверяемая строка', 10));
+checkStringLength('проверяемая строка', 10);
 
