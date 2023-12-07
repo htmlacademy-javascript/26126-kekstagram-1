@@ -1,7 +1,8 @@
 //Функция для проверки, является ли строка палиндромом
-let newString = '';
+
 
 const isPalindrome = (string) => {
+  let newString = '';
   const lowStringNoSpace = string.toLowerCase().replaceAll(' ', '');
   for (let i = lowStringNoSpace.length - 1; i >= 0; i--) {
     newString += lowStringNoSpace[i];
@@ -15,21 +16,19 @@ const isPalindrome = (string) => {
 isPalindrome('Лёша на полке клопа нашёл ');
 
 /* Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа. Если в строке нет ни одной цифры, функция должна вернуть NaN*/
-let newStringNumber = '';
+
 const getCeilNumber = (data) => {
+  let newStringNumber = '';
   const dataToString = String(data);
   const lowStringNoSpace = dataToString.toLowerCase().replaceAll(' ', '');
   for (let i = 0; i <= lowStringNoSpace.length - 1; i++) {
-    let floatNumber = parseFloat(lowStringNoSpace[i]);
-    if(isNaN(floatNumber)) {
-      floatNumber = '';
+    const floatNumber = parseFloat(lowStringNoSpace[i]);
+    if(!isNaN(floatNumber)) {
+      newStringNumber += floatNumber;
     }
-    newStringNumber += floatNumber;
   }
   const newNumber = parseFloat(newStringNumber);
   return newNumber;
-
-
 };
 getCeilNumber('1 кефир, 0.5 батона');
 
@@ -38,15 +37,16 @@ getCeilNumber('1 кефир, 0.5 батона');
 Эта функция нам пригодится для формирования адресов файлов. Примеры её использования
 Попробуйте не использовать при этом функцию padStart() =)
 */
-let firstAddingString = '';
-let addString = '';
-let newAddressString = '';
+
 const getAddressString = (initialString, minLength, addData) => {
+  let firstAddingString = '';
+  let addString = '';
+  let newAddressString = '';
   firstAddingString = addData + initialString;
 
   if (firstAddingString.length <= minLength) {
-    const nededSymbols = minLength - firstAddingString.length;
-    for(let i = 0; i <= nededSymbols - 1; i++) {
+    const foundSymbols = minLength - firstAddingString.length;
+    for(let i = 0; i <= foundSymbols - 1; i++) {
       if(addData.length > 1){
         addString += addData[i] ;
       } else {
@@ -56,8 +56,8 @@ const getAddressString = (initialString, minLength, addData) => {
     newAddressString = addString + firstAddingString;
   }
   if (firstAddingString.length > minLength) {
-    const duelengthForAddData = minLength - initialString.length;
-    addString = addData.slice(0, duelengthForAddData);
+    const dueLengthForAddData = minLength - initialString.length;
+    addString = addData.slice(0, dueLengthForAddData);
     newAddressString = addString + initialString;
   }
   return newAddressString;
@@ -66,12 +66,7 @@ const getAddressString = (initialString, minLength, addData) => {
 getAddressString('q', 4, 'we');
 
 //Функция для проверки длины строки.
-const checkStringLength = (string, maxLength) => {
-  if(string.length <= maxLength) {
-    return true;
-  }
-  return false;
-};
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
 
 checkStringLength('проверяемая строка', 10);
 
