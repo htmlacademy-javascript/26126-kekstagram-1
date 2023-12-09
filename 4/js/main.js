@@ -80,10 +80,9 @@ const createPhotoDescription = () => ({
   url: `photos/${generateUrlId.next().value}.jpg`,
   description: getRandomElementFromArray(DESCRIPTIONS),
   likes: getRandomInt(15, 200),
-  comments: Array.from({length:getRandomInt(1,3)}, createComment)
+  comments: Array.from({length:getRandomInt(1,15)}, createComment)
 });
 
 // eslint-disable-next-line no-unused-vars
 const photoDescriptions = Array.from({length:25}, createPhotoDescription);
-
 
