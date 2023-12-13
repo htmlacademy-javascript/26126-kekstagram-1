@@ -1,6 +1,5 @@
 //Функция для проверки, является ли строка палиндромом
 
-
 const isPalindrome = (string) => {
   let newString = '';
   const lowStringNoSpace = string.toLowerCase().replaceAll(' ', '');
@@ -70,3 +69,40 @@ const checkStringLength = (string, maxLength) => string.length <= maxLength;
 
 checkStringLength('проверяемая строка', 10);
 
+/*//сетчик, работа с замыканием
+const createCounter = function(init) {
+  let currentValue = init;
+  return {
+    increment: function(){
+      currentValue += 1;
+      return currentValue;
+    },
+    decrement: function(){
+      currentValue -= 1;
+      return currentValue;
+    },
+    reset: function(){
+      currentValue = init;
+      return currentValue;
+    }
+  };
+};
+const counter = createCounter(5);*/
+// counter.increment(); // 6
+//counter.reset(); // 5
+//counter.decrement(); // 4
+/*
+//последовательность фибоначчи
+const fibGenerator = function*() {
+  let preLastValue = 0;
+  let lastValue = 1;
+  yield preLastValue;
+  yield lastValue;
+  while (true) {
+    const newValue = lastValue + preLastValue;
+    yield newValue;
+    preLastValue = lastValue;
+    lastValue = newValue;
+  }
+};
+const gen = fibGenerator();*/
