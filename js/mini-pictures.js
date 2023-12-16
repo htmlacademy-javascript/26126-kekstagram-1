@@ -13,9 +13,9 @@ const createGallery = (photosArray) => {
     const miniaturePicture = pictureTemplate.cloneNode(true);
     picturesFragment.appendChild(miniaturePicture);
   });
-  const gallery = picturesContainer.appendChild(picturesFragment);
 
-  return gallery;
+  picturesContainer.appendChild(picturesFragment);
+
 };
 
 export {createGallery};
