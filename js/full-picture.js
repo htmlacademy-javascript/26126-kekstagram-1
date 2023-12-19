@@ -24,12 +24,12 @@ const fillBigPhoto = (emptyBigPhoto, currentObject) => {
 };
 
 const createCommentsList = (currentObject) => {
-  currentObject.comments.slice().forEach(({avatar, message, name}) => {
-    commentTemplate.querySelector('.social__picture').src = avatar;
-    commentTemplate.querySelector('.social__picture').alt = name;
-    commentTemplate.querySelector('.social__text').textContent = message;
-
+  currentObject.comments.slice(0, 5).forEach(({avatar, message, name}) => {
     const comment = commentTemplate.cloneNode(true);
+    comment.querySelector('.social__picture').src = avatar;
+    comment.querySelector('.social__picture').alt = name;
+    comment.querySelector('.social__text').textContent = message;
+
     commentsFragment.appendChild(comment);
   });
 
@@ -59,11 +59,12 @@ function closeFullPhoto () {
   exitBtn.removeEventListener('click', onExitBtnClick);
 }
 
-const openFullPhoto = (photos) => {
+const getFullPhotoOpenHandler = (photos) => {
   picturesContainer.addEventListener('click', (evt) => {
-    if(evt.target.closest('.picture')) {
-      const pictureId = Number(evt.target.closest('.picture').dataset.id);
-      const currentPhoto = photos.find((item) => item.id === pictureId);
+    const currentPicture = evt.target.closest('.picture');
+    if(currentPicture) {
+      const pictureId = Number(currentPicture.dataset.id);
+      const pictureObject = photos.find((item) => item.id === pictureId);
 
       bigPictureModal.classList.remove('hidden');
       pageBody.classList.add('modal-open');
@@ -74,11 +75,11 @@ const openFullPhoto = (photos) => {
       document.addEventListener('keydown', onDocumentKeydown);
       exitBtn.addEventListener('click', onExitBtnClick);
 
-      fillBigPhoto(bigPictureModal, currentPhoto);
-      createCommentsList(currentPhoto);
+      fillBigPhoto(bigPictureModal, pictureObject);
+      createCommentsList(pictureObject);
     }
   });
 };
 
 
-export {openFullPhoto};
+export {getFullPhotoOpenHandler};

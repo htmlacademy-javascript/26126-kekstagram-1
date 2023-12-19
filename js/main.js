@@ -1,10 +1,10 @@
 import {createPhotoDescriptions} from './data.js';
 import {createGallery} from './mini-pictures.js';
 
-import {openFullPhoto} from './full-picture.js';
+import {getFullPhotoOpenHandler} from './full-picture.js';
 
 const photoDescriptions = createPhotoDescriptions();
 
 createGallery(photoDescriptions);
-openFullPhoto(photoDescriptions);
+getFullPhotoOpenHandler(photoDescriptions);
 
