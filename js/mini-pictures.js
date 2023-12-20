@@ -6,10 +6,11 @@ const picturesFragment = document.createDocumentFragment();
 
 
 const createGallery = (photosArray) => {
-  photosArray.slice().forEach(({url, likes, comments})=> {
+  photosArray.slice().forEach(({id, url, likes, comments})=> {
     pictureTemplate.querySelector('.picture__img').src = url;
     pictureTemplate.querySelector('.picture__likes').textContent = likes;
     pictureTemplate.querySelector('.picture__comments').textContent = comments.length;
+    pictureTemplate.dataset.id = id;
     const miniaturePicture = pictureTemplate.cloneNode(true);
     picturesFragment.appendChild(miniaturePicture);
   });
@@ -18,4 +19,4 @@ const createGallery = (photosArray) => {
 
 };
 
-export {createGallery};
+export {createGallery, picturesContainer};
