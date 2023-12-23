@@ -18,4 +18,14 @@ const getRandomElementFromArray = (elementsArray) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, };
+const pluralize = (num, titles) => {
+  if(num % 10 === 1 && num % 100 !== 11){
+    return `${num}  ${titles[0]}`;
+  } else if (num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20)){
+    return `${num}  ${titles[1]}`;
+  } else {
+    return `${num}  ${titles[2]}`;
+  }
+};
+
+export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize};
