@@ -1,6 +1,7 @@
 import {picturesContainer} from './mini-pictures.js';
-import {isEscapeKey} from './util.js';
-import {COMMENT_STEP} from './const.js';
+import {isEscapeKey, pluralize} from './util.js';
+import {COMMENT_STEP, COMMENTS_PLURAL} from './const.js';
+
 
 const pageBody = document.querySelector('body');
 const bigPictureModal = document.querySelector('.big-picture');
@@ -11,33 +12,38 @@ const commentTemplate = document.querySelector('#comment')
 const commentsFragment = document.createDocumentFragment();
 const commentsContainer = bigPictureModal.querySelector('.social__comments');
 
-const visibleCommentsCount = bigPictureModal.querySelector('.comments-count-showed');
-const totalCommentsCount = bigPictureModal.querySelector('.comments-count');
 const commentsLoader = bigPictureModal.querySelector('.social__comments-loader');
+const commentBlock = bigPictureModal.querySelector('.social__comment-count');
 
 const exitBtn = bigPictureModal.querySelector('#picture-cancel');
 
 const fillBigPhoto = (emptyBigPhoto, currentObject) => {
-  emptyBigPhoto.querySelector('.likes-count').textContent = currentObject.likes;
-  emptyBigPhoto.querySelector('.comments-count').textContent = currentObject.comments.length;
+  emptyBigPhoto.querySelector('.likes-count').textContent = String(currentObject.likes);
+  emptyBigPhoto.querySelector('.comments-count').textContent = String(currentObject.comments.length);
   emptyBigPhoto.querySelector('.social__caption').textContent = currentObject.description;
   emptyBigPhoto.querySelector('.big-picture__img')
     .querySelector('img').src = currentObject.url;
 };
 
 let renderedCommentsFirstIndex = 0;
-let newRenderedCommentsLastIndex = COMMENT_STEP;
+let newRenderedCommentsLastIndex = renderedCommentsFirstIndex + COMMENT_STEP;
 let onCommentsLoaderClick = () => {};
 
 const createCommentsList = (currentObject) => {
   const comments = currentObject.comments;
   const commentsCount = comments.length;
-  totalCommentsCount.textContent = commentsCount;
-
-  visibleCommentsCount.textContent = Math.min(commentsCount,newRenderedCommentsLastIndex);
+  commentBlock.innerHTML = '<span class="comments-count"> </span>';
+  const visibleCommentsCount = Math.min(commentsCount,newRenderedCommentsLastIndex);
 
   if (newRenderedCommentsLastIndex >= commentsCount){
     commentsLoader.classList.add('hidden');
+  }
+  if(commentsCount <= COMMENT_STEP) {
+    commentBlock.innerHTML = `<span class="comments-count">${String(pluralize(commentsCount, COMMENTS_PLURAL))}</span>`;
+  }
+
+  if(commentsCount > COMMENT_STEP) {
+    commentBlock.innerHTML = `<span class="comments-count-showed">${String(visibleCommentsCount)}</span> из <span class="comments-count">${String(pluralize(commentsCount, COMMENTS_PLURAL))}</span>`;
   }
 
   comments.slice(renderedCommentsFirstIndex, newRenderedCommentsLastIndex)
@@ -74,7 +80,7 @@ function closeFullPhoto () {
   document.removeEventListener('keydown', onDocumentKeydown);
   exitBtn.removeEventListener('click', onExitBtnClick);
   renderedCommentsFirstIndex = 0;
-  newRenderedCommentsLastIndex = COMMENT_STEP;
+  newRenderedCommentsLastIndex = renderedCommentsFirstIndex + COMMENT_STEP;
   commentsLoader.classList.remove('hidden');
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 }
