@@ -111,4 +111,4 @@ const initFullPhotoOpenHandler = (photos) => {
 };
 
 
-export {initFullPhotoOpenHandler};
+export {initFullPhotoOpenHandler, pageBody};
