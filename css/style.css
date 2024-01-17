@@ -709,7 +709,11 @@ main {
 
   border-radius: 5px;
 }
-
+.text__error {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c00;
+}
 
 /**
  * Кнопка для отправки изображения
