@@ -28,4 +28,6 @@ const pluralize = (num, titles) => {
   }
 };
 
-export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize};
+const arrayWithoutEmptyElements = (array) => array.filter(Boolean);
+
+export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize, arrayWithoutEmptyElements};

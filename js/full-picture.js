@@ -1,9 +1,9 @@
 import {picturesContainer} from './mini-pictures.js';
 import {isEscapeKey, pluralize} from './util.js';
 import {COMMENT_STEP, COMMENTS_PLURAL} from './const.js';
+import {pageBody} from './element.js';
 
 
-const pageBody = document.querySelector('body');
 const bigPictureModal = document.querySelector('.big-picture');
 const commentTemplate = document.querySelector('#comment')
   .content
@@ -111,4 +111,4 @@ const initFullPhotoOpenHandler = (photos) => {
 };
 
 
-export {initFullPhotoOpenHandler, pageBody};
+export {initFullPhotoOpenHandler};

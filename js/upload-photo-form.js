@@ -1,6 +1,7 @@
-import {pageBody} from './full-picture.js';
-import {isEscapeKey} from './util.js';
+import {pageBody} from './element.js';
+import {isEscapeKey, arrayWithoutEmptyElements} from './util.js';
 import {HASHTAG_MAX_COUNT} from './const.js';
+
 
 const uploadForm = document.querySelector('.img-upload__form');
 
@@ -10,6 +11,12 @@ const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
+
+const pristine = new Pristine(uploadForm, {
+  classTo: 'text__hashtags-label',
+  errorTextParent: 'text__hashtags-label',
+  errorTextClass: 'text__error'
+});
 
 const onPhotoEditorResetBtnClick = () => {
   closePhotoEditor();
@@ -33,6 +40,7 @@ function closePhotoEditor () {
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadFileControl.value = '';
+  pristine.reset();
 }
 
 uploadFileControl.addEventListener('change', ()=> {
@@ -44,61 +52,37 @@ uploadFileControl.addEventListener('change', ()=> {
   }
 });
 
-const pristine = new Pristine(uploadForm, {
-  classTo: 'text__hashtags-label',
-  errorTextParent: 'text__hashtags-label',
-  errorTextClass: 'text__error'
-});
-
 const isHashtagRegValid = (value) => {
   const hashtags = value.split(' ');
-  const validHashtagReg = /^#[a-z-я-ё0-9]{1,19}$/i;
-  let i = 0;
-  const regTest = validHashtagReg.test(hashtags[i]);
-
-  while(regTest) {
-    i++;
-    if(regTest === false){
-      break;
-    }
-    return regTest;
-  }
-  return regTest;
+  const validHashtagReg = /^$|^#[a-z-а-яё0-9]{1,19}$/i;
+  return hashtags.every((item)=> validHashtagReg.test(item));
 };
 
 const isHashtagCountValid = (value) => {
   const hashtags = value.split(' ');
-  if(hashtags.length > HASHTAG_MAX_COUNT) {
-    return false;
-  } else{
-    return true;
-  }
+  return arrayWithoutEmptyElements(hashtags).length <= HASHTAG_MAX_COUNT;
 };
 let duplicates = [];
 
 const isDuplicateHashtags = (value) => {
-  const hashtagsArray = value.split(' ');
-  duplicates = hashtagsArray.filter((hashtag, index, array) => array.indexOf(hashtag) !== index);
-  if(duplicates.length > 0){
-    return false;
-  }else{
-    return true;
-  }
+  const hashtagsArray = value.toLowerCase().split(' ');
+  duplicates = arrayWithoutEmptyElements(hashtagsArray).filter((hashtag, index, array) => array.indexOf(hashtag) !== index);
+  return duplicates.length <= 0;
 };
 
 const getDuplicateString = () => {
   const duplicatesString = duplicates.join(', ');
   return` ${`дубликаты: ${ duplicatesString}`}`;
 };
-pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполнено не верно');
+pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполняется в формате: #example123 или #пример123, не более 20ти символов');
 pristine.addValidator(hashtagInput, isHashtagCountValid, 'более 5ти хештегов');
 pristine.addValidator(hashtagInput, isDuplicateHashtags, getDuplicateString);
 
-const initSubmitUploadformHandler = () => {
+const formHandler = () => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
   });
 };
 
-export{initSubmitUploadformHandler};
+export {formHandler};
