@@ -30,4 +30,17 @@ const pluralize = (num, titles) => {
 
 const arrayWithoutEmptyElements = (array) => array.filter(Boolean);
 
-export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize, arrayWithoutEmptyElements};
+const getEffectSelector = (currentInputId) => {
+  const selectors = {
+    'effect-none': 'effects__preview--none',
+    'effect-chrome': 'effects__preview--chrome',
+    'effect-sepia': 'effects__preview--sepia',
+    'effect-marvin': 'effects__preview--marvin',
+    'effect-phobos': 'effects__preview--phobos',
+    'effect-heat': 'effects__preview--heat',
+
+  };
+  return selectors[currentInputId];
+};
+
+export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector};

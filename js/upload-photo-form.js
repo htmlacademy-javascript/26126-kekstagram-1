@@ -1,9 +1,8 @@
-import {pageBody} from './element.js';
+import {pageBody, uploadForm, effectsRadioBtnList} from './element.js';
 import {isEscapeKey, arrayWithoutEmptyElements} from './util.js';
 import {HASHTAG_MAX_COUNT} from './const.js';
-
-
-const uploadForm = document.querySelector('.img-upload__form');
+import {removeSizeBtnLicteners, addSizeBtnLicteners, resetPhotoSize} from './resize-photo.js';
+import {onEffectRadioBtnClick, resetFilter} from './slider-editor.js';
 
 const uploadFileControl = uploadForm.querySelector('#upload-file');
 const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
@@ -35,19 +34,26 @@ const onDocumentKeydown = (evt) => {
 };
 
 function closePhotoEditor () {
+  uploadForm.reset();
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadFileControl.value = '';
   pristine.reset();
+  removeSizeBtnLicteners();
+  resetFilter();
+  resetPhotoSize();
+  effectsRadioBtnList.removeEventListener('click', onEffectRadioBtnClick);
 }
 
-uploadFileControl.addEventListener('change', ()=> {
+uploadFileControl.addEventListener('change', () => {
   if(uploadFileControl.value) {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
+    addSizeBtnLicteners();
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
+    effectsRadioBtnList.addEventListener('click', onEffectRadioBtnClick);
     document.addEventListener('keydown', onDocumentKeydown);
   }
 });
@@ -74,15 +80,16 @@ const getDuplicateString = () => {
   const duplicatesString = duplicates.join(', ');
   return` ${`дубликаты: ${ duplicatesString}`}`;
 };
+
 pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполняется в формате: #example123 или #пример123, не более 20ти символов');
 pristine.addValidator(hashtagInput, isHashtagCountValid, 'более 5ти хештегов');
 pristine.addValidator(hashtagInput, isDuplicateHashtags, getDuplicateString);
 
-const formHandler = () => {
+const initSubmitUploadFormHandler = () => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
   });
 };
 
-export {formHandler};
+export {initSubmitUploadFormHandler};
