@@ -1,6 +1,6 @@
 import {uploadForm, imgPreview} from './element.js';
 import {getEffectSelector} from './util.js';
-import {Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, EFFECT_LEVEL_MAX} from './const.js';
+import {Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, EFFECT_LEVEL_MAX, styleFilterByEffects} from './const.js';
 
 const effectLevelInput = uploadForm.querySelector('.effect-level__value');
 effectLevelInput.value = EFFECT_LEVEL_MAX;
@@ -63,6 +63,7 @@ const resetFilter = () => {
   imgPreview.classList.replace(selectorImg, 'effects__preview--none');
 };
 
+
 effectSlider.noUiSlider.on('update', () => {
   effectLevelInput.value = effectSlider.noUiSlider.get();
   effectRadioBtns.forEach((item)=> {
@@ -72,35 +73,30 @@ effectSlider.noUiSlider.on('update', () => {
       }
       switch (item.id){
         case Effects.chrome: {
-          const styleFilter = imgPreview.style.filter = `grayscale(${effectLevelInput.value})`;
-          return styleFilter;
+          imgPreview.style.filter = styleFilterByEffects.chrome(effectLevelInput.value);
+          break;
         }
         case Effects.sepia: {
-          const styleFilter = imgPreview.style.filter = `sepia(${effectLevelInput.value})`;
-
-          return styleFilter;
+          imgPreview.style.filter = styleFilterByEffects.sepia(effectLevelInput.value);
+          break;
         }
         case Effects.marvin: {
-          const styleFilter = imgPreview.style.filter = `invert(${effectLevelInput.value}%)`;
-
-          return styleFilter;
+          imgPreview.style.filter = styleFilterByEffects.marvin(effectLevelInput.value);
+          break;
         }
         case Effects.phobos: {
-          const styleFilter = imgPreview.style.filter = `blur(${effectLevelInput.value}px)`;
-
-          return styleFilter;
+          imgPreview.style.filter = styleFilterByEffects.phobos(effectLevelInput.value);
+          break;
         }
         case Effects.heat: {
-          const styleFilter = imgPreview.style.filter = `brightness(${effectLevelInput.value})`;
-
-          return styleFilter;
+          imgPreview.style.filter = styleFilterByEffects.heat(effectLevelInput.value);
+          break;
         }
         default: {
           resetFilter();
         }
       }
     }
-
   });
 });
 

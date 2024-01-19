@@ -1,3 +1,4 @@
+import {getChromeStyleFilter, getSepiaStyleFilter, getMarvinStyleFilter, getPhobosStyleFilter,getHeatStyleFilter} from './util.js';
 const PHOTOS_MAX_COUNT = 25;
 const LIKES_MAX_COUNT = 20;
 const LIKES_MIN_COUNT = 15;
@@ -50,4 +51,12 @@ const MESSAGES = ['Всё отлично!',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
-export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, EFFECT_LEVEL_MAX};
+const styleFilterByEffects = {
+  chrome: getChromeStyleFilter,
+  sepia:getSepiaStyleFilter,
+  marvin:getMarvinStyleFilter,
+  phobos:getPhobosStyleFilter,
+  heat:getHeatStyleFilter,
+};
+
+export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, EFFECT_LEVEL_MAX, styleFilterByEffects};

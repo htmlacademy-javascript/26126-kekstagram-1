@@ -43,4 +43,10 @@ const getEffectSelector = (currentInputId) => {
   return selectors[currentInputId];
 };
 
-export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector};
+const getChromeStyleFilter = (value)=> `grayscale(${value})`;
+const getSepiaStyleFilter = (value)=> `sepia(${value})`;
+const getMarvinStyleFilter = (value)=> `invert(${value}%)`;
+const getPhobosStyleFilter = (value)=> `blur(${value}px)`;
+const getHeatStyleFilter = (value)=> `brightness(${value})`;
+
+export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, getChromeStyleFilter, getSepiaStyleFilter, getMarvinStyleFilter, getPhobosStyleFilter,getHeatStyleFilter};
