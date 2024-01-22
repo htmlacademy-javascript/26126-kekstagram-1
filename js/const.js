@@ -14,15 +14,6 @@ const SCALE_MAX = 100;
 const SCALE_MIN = 25;
 const EFFECT_LEVEL_MAX = 100;
 
-const Effects = {
-  none: 'effect-none',
-  chrome: 'effect-chrome',
-  sepia: 'effect-sepia',
-  marvin: 'effect-marvin',
-  phobos: 'effect-phobos',
-  heat: 'effect-heat',
-};
-
 const sliderOptionsObjectChromeSepia = {
   range: {
     min: 0,
@@ -42,6 +33,33 @@ const sliderOptionsObjectMarvinDefault = {
   step: 1,
 };
 
+const sliderOptionsObjectPhobos = {
+  range: {
+    min: 0,
+    max: 3
+  },
+  start: 3,
+  step: 0.1,
+};
+
+const sliderOptionsObjectHeat = {
+  range: {
+    min: 1,
+    max: 3
+  },
+  start: 3,
+  step: 0.1,
+};
+
+const Effects = {
+  none: sliderOptionsObjectMarvinDefault,
+  chrome: sliderOptionsObjectChromeSepia,
+  sepia: sliderOptionsObjectChromeSepia,
+  marvin: sliderOptionsObjectMarvinDefault,
+  phobos: sliderOptionsObjectPhobos,
+  heat: sliderOptionsObjectHeat,
+};
+
 const DESCRIPTIONS = ['котик', 'закат', 'рассвет'];
 const NAMES = ['Артем','Владислав', 'Светлана', 'Георгий', 'Анжелика'];
 const MESSAGES = ['Всё отлично!',
@@ -53,10 +71,10 @@ const MESSAGES = ['Всё отлично!',
 
 const styleFilterByEffects = {
   chrome: getChromeStyleFilter,
-  sepia:getSepiaStyleFilter,
-  marvin:getMarvinStyleFilter,
-  phobos:getPhobosStyleFilter,
-  heat:getHeatStyleFilter,
+  sepia: getSepiaStyleFilter,
+  marvin: getMarvinStyleFilter,
+  phobos: getPhobosStyleFilter,
+  heat: getHeatStyleFilter,
 };
 
-export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, EFFECT_LEVEL_MAX, styleFilterByEffects};
+export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, styleFilterByEffects};

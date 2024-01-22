@@ -1,6 +1,6 @@
 import {uploadForm, imgPreview} from './element.js';
 import {getEffectSelector} from './util.js';
-import {Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, EFFECT_LEVEL_MAX, styleFilterByEffects} from './const.js';
+import {Effects, EFFECT_LEVEL_MAX, styleFilterByEffects} from './const.js';
 
 const effectLevelInput = uploadForm.querySelector('.effect-level__value');
 effectLevelInput.value = EFFECT_LEVEL_MAX;
@@ -21,41 +21,8 @@ noUiSlider.create(effectSlider, {
 });
 
 
-const getUpdateSliderOptions = (effect, sliderElement) => {
-  switch (effect) {
-    case Effects.chrome: {
-      return sliderElement.noUiSlider.updateOptions(sliderOptionsObjectChromeSepia);
-    }
-    case Effects.sepia: {
-      return sliderElement.noUiSlider.updateOptions(sliderOptionsObjectChromeSepia);
-    }
-    case Effects.marvin: {
-      return sliderElement.noUiSlider.updateOptions(sliderOptionsObjectMarvinDefault);
-    }
-    case Effects.phobos: {
-      return sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3
-        },
-        start: 3,
-        step: 0.1,
-      });
-    }
-    case Effects.heat: {
-      return sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3
-        },
-        start: 3,
-        step: 0.1,
-      });
-    }
-    default:
-      return sliderElement.noUiSlider.updateOptions(sliderOptionsObjectMarvinDefault);
-  }
-};
+const getUpdateSliderOptions = (effect, sliderElement) =>
+  sliderElement.noUiSlider.updateOptions(Effects[effect]);
 
 const resetFilter = () => {
   imgPreview.style.removeProperty('filter');
@@ -68,33 +35,11 @@ effectSlider.noUiSlider.on('update', () => {
   effectLevelInput.value = effectSlider.noUiSlider.get();
   effectRadioBtns.forEach((item)=> {
     if(item.checked){
-      if(item.id !== 'effect-none') {
+      if(item.value !== 'none') {
         sliderContainer.classList.remove('hidden');
-      }
-      switch (item.id){
-        case Effects.chrome: {
-          imgPreview.style.filter = styleFilterByEffects.chrome(effectLevelInput.value);
-          break;
-        }
-        case Effects.sepia: {
-          imgPreview.style.filter = styleFilterByEffects.sepia(effectLevelInput.value);
-          break;
-        }
-        case Effects.marvin: {
-          imgPreview.style.filter = styleFilterByEffects.marvin(effectLevelInput.value);
-          break;
-        }
-        case Effects.phobos: {
-          imgPreview.style.filter = styleFilterByEffects.phobos(effectLevelInput.value);
-          break;
-        }
-        case Effects.heat: {
-          imgPreview.style.filter = styleFilterByEffects.heat(effectLevelInput.value);
-          break;
-        }
-        default: {
-          resetFilter();
-        }
+        imgPreview.style.filter = styleFilterByEffects[item.value](effectLevelInput.value);
+      } else {
+        resetFilter();
       }
     }
   });
@@ -103,9 +48,9 @@ effectSlider.noUiSlider.on('update', () => {
 const onEffectRadioBtnClick = (evt) => {
   const currentRadioBtn = evt.target.closest('.effects__radio');
   if(currentRadioBtn){
-    const effectBtnId = currentRadioBtn.id;
-    imgPreview.classList.replace(selectorImg, getEffectSelector(effectBtnId));
-    getUpdateSliderOptions(effectBtnId, effectSlider);
+    const effectBtnValue = currentRadioBtn.value;
+    imgPreview.classList.replace(selectorImg, getEffectSelector(effectBtnValue));
+    getUpdateSliderOptions(effectBtnValue, effectSlider);
   }
 };
 
