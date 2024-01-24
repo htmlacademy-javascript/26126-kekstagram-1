@@ -27,34 +27,25 @@ const getEffectSelector = (currentInputId) => {
   return selectors[currentInputId];
 };
 
+const alertTemplate = document.querySelector('#alert')
+  .content
+  .querySelector('.alert__block');
 
 const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = '0';
-  alertContainer.style.top = '0';
-  alertContainer.style.right = '0';
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-
-  alertContainer.textContent = message;
-
-  document.body.append(alertContainer);
+  alertTemplate.textContent = message;
+  document.body.append(alertTemplate);
 
   setTimeout(() => {
-    alertContainer.remove();
+    alertTemplate.remove();
   }, ALERT_SHOW_TIME);
 };
 
-const disableSubmitButton = (button) => {
+const blockSubmitButton = (button) => {
   button.disabled = true;
   button.textContent = SubmitButtonText.SENDING;
 };
 
-const unDisableSubmitButton = (button) => {
+const unBlockSubmitButton = (button) => {
   button.disabled = false;
   button.textContent = SubmitButtonText.IDLE;
 };
@@ -63,9 +54,18 @@ const successTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
 
-const showAlertSuccess = (container) => {
+const showSuccessMessage = (container) => {
   const success = successTemplate.cloneNode(true);
   container.appendChild(success);
 };
 
-export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, disableSubmitButton, unDisableSubmitButton,showAlertSuccess};
+const errorTemplate = document.querySelector('#error')
+  .content
+  .querySelector('.error');
+
+const showErrorMessage = (container) => {
+  const error = errorTemplate.cloneNode(true);
+  container.appendChild(error);
+};
+
+export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage};

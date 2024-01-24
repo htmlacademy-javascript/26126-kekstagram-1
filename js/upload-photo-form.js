@@ -1,5 +1,5 @@
 import {pageBody, uploadForm, effectsRadioBtnList} from './element.js';
-import {isEscapeKey, arrayWithoutEmptyElements, showAlert, showAlertSuccess, disableSubmitButton, unDisableSubmitButton} from './util.js';
+import {isEscapeKey, arrayWithoutEmptyElements, showSuccessMessage,showErrorMessage, blockSubmitButton, unBlockSubmitButton} from './util.js';
 import {HASHTAG_MAX_COUNT} from './const.js';
 import {removeSizeBtnLicteners, addSizeBtnLicteners, resetPhotoSize} from './resize-photo.js';
 import {onEffectRadioBtnClick, resetFilter} from './slider-editor.js';
@@ -10,8 +10,10 @@ const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 
 const submitBtn = uploadForm.querySelector('#upload-submit');
-let successModal = '';
-let successBtn = '';
+let successModal;
+let successBtn;
+let errorModal;
+let errorBtn;
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
@@ -30,12 +32,20 @@ const onSuccessBtnClick = () => {
   closeSuccessModal();
 };
 
+const onErrorBtnClick = () => {
+  closeErrorModal();
+};
+
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     if(document.activeElement === hashtagInput || document.activeElement === commentInput){
       evt.stopPropagation();
-    } if(successModal){
+    }
+    if(successModal !== undefined){
+      closeSuccessModal();
+    }
+    if(errorModal !== undefined){
       closeSuccessModal();
     } else {
       uploadForm.reset();
@@ -59,11 +69,20 @@ function closePhotoEditor () {
 }
 
 function closeSuccessModal() {
-  if(successModal){
+  if(successModal !== undefined){
     successModal.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
     successBtn.removeEventListener('click', onSuccessBtnClick);
     pageBody.removeEventListener('click', onSuccessBtnClick);
+  }
+}
+
+function closeErrorModal() {
+  if(errorModal !== undefined){
+    errorModal.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+    errorBtn.removeEventListener('click', onErrorBtnClick);
+    pageBody.removeEventListener('click', onErrorBtnClick);
   }
 }
 
@@ -110,21 +129,26 @@ const initSubmitUploadFormHandler = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      disableSubmitButton(submitBtn);
+      blockSubmitButton(submitBtn);
       sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .then(()=> {
-          showAlertSuccess(pageBody);
+        .then((data)=> {
+          onSuccess(data);
+          showSuccessMessage(pageBody);
           successModal = document.querySelector('.success');
           successBtn = successModal.querySelector('.success__button');
           pageBody.addEventListener('click', onSuccessBtnClick);
           successBtn.addEventListener('click', onSuccessBtnClick);
           document.addEventListener('keydown', onDocumentKeydown);
         })
-        .catch((err) => {
-          showAlert(err.message);
+        .catch(() => {
+          showErrorMessage(pageBody);
+          errorModal = document.querySelector('.error');
+          errorBtn = errorModal.querySelector('.error__button');
+          pageBody.addEventListener('click', onErrorBtnClick);
+          errorBtn.addEventListener('click', onErrorBtnClick);
+          document.addEventListener('keydown', onDocumentKeydown);
         })
-        .finally(unDisableSubmitButton(submitBtn));
+        .finally(() => unBlockSubmitButton(submitBtn));
     }
   });
 };
