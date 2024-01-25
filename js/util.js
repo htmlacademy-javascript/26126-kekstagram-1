@@ -12,6 +12,12 @@ const pluralize = (num, titles) => {
   }
 };
 
+const getRandomInt = (min, max)=> {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 const arrayWithoutEmptyElements = (array) => array.filter(Boolean);
 
 const getEffectSelector = (currentInputId) => {
@@ -68,4 +74,15 @@ const showErrorMessage = (container) => {
   container.appendChild(error);
 };
 
-export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage};
+// Функция взята из интернета и доработана
+// Источник - https://www.freecodecamp.org/news/javascript-debounce-example
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomInt};
