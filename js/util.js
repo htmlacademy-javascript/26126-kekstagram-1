@@ -84,17 +84,21 @@ function debounce (callback, timeoutDelay = 500) {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 }
-
 function getRandomElement (elements) {
-  let randomIndex = '';
-  let randomEl;
-  randomIndex = getRandomInt(0, elements.length - 1);
-  const filteredArray = elements.filter((item, index, array) => array.indexOf(item) !== randomIndex);
-  console.log(filteredArray);
-  return function () {
-    randomEl = filteredArray[randomIndex];
-    return randomEl;
-  };
+  let randomElement;
+  const availableIndexes = [];
+  for(let i = 0; i <= elements.length - 1; i++) {
+    availableIndexes.push(i);
+  }
+  function getElement() {
+    const randomIndex = getRandomInt(0, availableIndexes.length - 1);
+    const elementFromAvailableIndexes = availableIndexes[randomIndex];
+    availableIndexes.splice(randomIndex, 1);
+    randomElement = elements[elementFromAvailableIndexes];
+    return randomElement;
+  }
+  return getElement;
 }
 
-export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomInt, getRandomElement};
+
+export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomElement};
