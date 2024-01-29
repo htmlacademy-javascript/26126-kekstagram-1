@@ -3,14 +3,14 @@ import {getData} from './fetch.js';
 import {createGallery} from './mini-pictures.js';
 import {initSubmitUploadFormHandler, closePhotoEditor} from './upload-photo-form.js';
 import {initFullPhotoOpenHandler} from './full-picture.js';
-import {initFilters, onDefaulFilterClick, onRandomFilterClick, onDiscussedFilterClick, getRandomPhotos,sortByComments} from './filters.js';
+import {initFilters, setDefaulFilterClick, setRandomFilterClick, setDiscussedFilterClick, getRandomPhotos,sortByComments} from './filters.js';
 
 getData()
   .then((photos) => {
     initFilters(photos);
-    onDefaulFilterClick(debounce(()=>createGallery(photos.slice())));
-    onRandomFilterClick(debounce(()=>createGallery(getRandomPhotos(photos))));
-    onDiscussedFilterClick(debounce(()=>createGallery(sortByComments(photos))));
+    setDefaulFilterClick(debounce(()=>createGallery(photos.slice())));
+    setRandomFilterClick(debounce(()=>createGallery(getRandomPhotos(photos))));
+    setDiscussedFilterClick(debounce(()=>createGallery(sortByComments(photos))));
     initFullPhotoOpenHandler(photos);
   })
   .catch(

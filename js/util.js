@@ -85,4 +85,16 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomInt};
+function getRandomElement (elements) {
+  let randomIndex = '';
+  let randomEl;
+  randomIndex = getRandomInt(0, elements.length - 1);
+  const filteredArray = elements.filter((item, index, array) => array.indexOf(item) !== randomIndex);
+  console.log(filteredArray);
+  return function () {
+    randomEl = filteredArray[randomIndex];
+    return randomEl;
+  };
+}
+
+export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomInt, getRandomElement};

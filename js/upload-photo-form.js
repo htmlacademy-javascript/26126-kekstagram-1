@@ -1,7 +1,7 @@
 import {pageBody, uploadForm, effectsRadioBtnList} from './element.js';
 import {isEscapeKey, arrayWithoutEmptyElements, showSuccessMessage,showErrorMessage, blockSubmitButton, unBlockSubmitButton} from './util.js';
 import {HASHTAG_MAX_COUNT} from './const.js';
-import {removeSizeBtnLicteners, addSizeBtnLicteners, resetPhotoSize} from './resize-photo.js';
+import {removeSizeBtnLicteners, addSizeBtnListeners, resetPhotoSize} from './resize-photo.js';
 import {onEffectRadioBtnClick, resetFilter} from './slider-editor.js';
 import {sendData} from './fetch.js';
 
@@ -90,7 +90,7 @@ uploadFileControl.addEventListener('change', () => {
   if(uploadFileControl.value) {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
-    addSizeBtnLicteners();
+    addSizeBtnListeners();
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
     effectsRadioBtnList.addEventListener('click', onEffectRadioBtnClick);
     document.addEventListener('keydown', onDocumentKeydown);
@@ -117,7 +117,7 @@ const isDuplicateHashtags = (value) => {
 
 const getDuplicateString = () => {
   const duplicatesString = duplicates.join(', ');
-  return` ${`дубликаты: ${ duplicatesString}`}`;
+  return `дубликаты: ${ duplicatesString}`;
 };
 
 pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполняется в формате: #example123 или #пример123, не более 20ти символов');
