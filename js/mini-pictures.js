@@ -14,9 +14,13 @@ const createGallery = (photosArray) => {
     const miniaturePicture = pictureTemplate.cloneNode(true);
     picturesFragment.appendChild(miniaturePicture);
   });
-
+  const pictures = picturesContainer.querySelectorAll('.picture');
+  if(pictures.length !== 0){
+    pictures.forEach((item)=> {
+      item.remove();
+    });
+  }
   picturesContainer.appendChild(picturesFragment);
-
 };
 
 export {createGallery, picturesContainer};

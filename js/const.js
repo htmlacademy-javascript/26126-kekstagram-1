@@ -6,6 +6,7 @@ const SCALE_MAX = 100;
 const SCALE_MIN = 25;
 const EFFECT_LEVEL_MAX = 100;
 const ALERT_SHOW_TIME = 5000;
+const RANDOM_PHOTOS_COUNT = 10;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -73,7 +74,8 @@ const styleFilterByEffects = {
   heat: getHeatStyleFilter,
 };
 
-const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+
+const BASE_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
@@ -83,9 +85,10 @@ const Method = {
   POST: 'POST',
 };
 
+
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-export {COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, styleFilterByEffects,ALERT_SHOW_TIME, SubmitButtonText, BASE_URL, Route, Method, ErrorText};
+export {COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, styleFilterByEffects,ALERT_SHOW_TIME, SubmitButtonText, BASE_URL, Route, Method, ErrorText,RANDOM_PHOTOS_COUNT};

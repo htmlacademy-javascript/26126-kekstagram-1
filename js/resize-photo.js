@@ -33,7 +33,7 @@ const onBiggerBtnClick = () => {
 };
 
 
-function addSizeBtnLicteners () {
+function addSizeBtnListeners () {
   smallerBtn.addEventListener('click', onSmallerBtnClick);
   biggerBtn.addEventListener('click', onBiggerBtnClick);
 }
@@ -48,4 +48,4 @@ const resetPhotoSize = () => {
   changePhotoSize();
 };
 
-export {removeSizeBtnLicteners, addSizeBtnLicteners, changePhotoSize,resetPhotoSize};
+export {removeSizeBtnLicteners, addSizeBtnListeners, changePhotoSize,resetPhotoSize};
