@@ -7,6 +7,7 @@ const SCALE_MIN = 25;
 const EFFECT_LEVEL_MAX = 100;
 const ALERT_SHOW_TIME = 5000;
 const RANDOM_PHOTOS_COUNT = 10;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -91,4 +92,4 @@ const ErrorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-export {COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, styleFilterByEffects,ALERT_SHOW_TIME, SubmitButtonText, BASE_URL, Route, Method, ErrorText,RANDOM_PHOTOS_COUNT};
+export {COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, styleFilterByEffects,ALERT_SHOW_TIME, SubmitButtonText, BASE_URL, Route, Method, ErrorText,RANDOM_PHOTOS_COUNT, FILE_TYPES};
