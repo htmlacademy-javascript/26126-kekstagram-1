@@ -1,6 +1,6 @@
 import {pageBody, uploadForm, effectsRadioBtnList} from './element.js';
 import {isEscapeKey, arrayWithoutEmptyElements, showSuccessMessage,showErrorMessage, blockSubmitButton, unBlockSubmitButton} from './util.js';
-import {HASHTAG_MAX_COUNT} from './const.js';
+import {HASHTAG_MAX_COUNT, FILE_TYPES} from './const.js';
 import {removeSizeBtnLicteners, addSizeBtnListeners, resetPhotoSize} from './resize-photo.js';
 import {onEffectRadioBtnClick, resetFilter} from './slider-editor.js';
 import {sendData} from './fetch.js';
@@ -8,6 +8,8 @@ import {sendData} from './fetch.js';
 const uploadFileControl = uploadForm.querySelector('#upload-file');
 const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
+const preview = document.querySelector('.img-upload__preview');
+const effectsPreviews = uploadForm.querySelectorAll('.effects__preview');
 
 const submitBtn = uploadForm.querySelector('#upload-submit');
 let successModal;
@@ -87,7 +89,17 @@ function closeErrorModal() {
 }
 
 uploadFileControl.addEventListener('change', () => {
-  if(uploadFileControl.value) {
+  if(uploadFileControl.value !== null) {
+    const file = uploadFileControl.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const userFileUrl = URL.createObjectURL(file);
+    if (matches === true) {
+      preview.firstElementChild.src = userFileUrl;
+      effectsPreviews.forEach((item)=> {
+        item.style.backgroundImage = `url(${userFileUrl})`;
+      });
+    }
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     addSizeBtnListeners();
