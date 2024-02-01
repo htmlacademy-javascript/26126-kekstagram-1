@@ -92,9 +92,9 @@ uploadFileControl.addEventListener('change', () => {
   if(uploadFileControl.value !== null) {
     const file = uploadFileControl.files[0];
     const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const isMatches = FILE_TYPES.some((it) => fileName.endsWith(it));
     const userFileUrl = URL.createObjectURL(file);
-    if (matches === true) {
+    if (isMatches) {
       preview.firstElementChild.src = userFileUrl;
       effectsPreviews.forEach((item)=> {
         item.style.backgroundImage = `url(${userFileUrl})`;

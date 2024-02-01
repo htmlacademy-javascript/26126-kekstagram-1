@@ -1,6 +1,6 @@
 import {uploadForm, imgPreview} from './element.js';
 import {getEffectSelector} from './util.js';
-import {Effects, EFFECT_LEVEL_MAX, styleFilterByEffects} from './const.js';
+import {Effects, EFFECT_LEVEL_MAX, StyleFilterByEffects} from './const.js';
 
 const effectLevelInput = uploadForm.querySelector('.effect-level__value');
 effectLevelInput.value = EFFECT_LEVEL_MAX;
@@ -37,7 +37,7 @@ effectSlider.noUiSlider.on('update', () => {
     if(item.checked){
       if(item.value !== 'none') {
         sliderContainer.classList.remove('hidden');
-        imgPreview.style.filter = styleFilterByEffects[item.value](effectLevelInput.value);
+        imgPreview.style.filter = StyleFilterByEffects[item.value](effectLevelInput.value);
       } else {
         resetFilter();
       }

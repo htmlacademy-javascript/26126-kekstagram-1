@@ -67,7 +67,7 @@ const getMarvinStyleFilter = (value)=> `invert(${value}%)`;
 const getPhobosStyleFilter = (value)=> `blur(${value}px)`;
 const getHeatStyleFilter = (value)=> `brightness(${value})`;
 
-const styleFilterByEffects = {
+const StyleFilterByEffects = {
   chrome: getChromeStyleFilter,
   sepia: getSepiaStyleFilter,
   marvin: getMarvinStyleFilter,
@@ -92,4 +92,4 @@ const ErrorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-export {COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, styleFilterByEffects,ALERT_SHOW_TIME, SubmitButtonText, BASE_URL, Route, Method, ErrorText,RANDOM_PHOTOS_COUNT, FILE_TYPES};
+export {COMMENT_STEP, COMMENTS_PLURAL, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, EFFECT_LEVEL_MAX, StyleFilterByEffects,ALERT_SHOW_TIME, SubmitButtonText, BASE_URL, Route, Method, ErrorText,RANDOM_PHOTOS_COUNT, FILE_TYPES};
