@@ -1,6 +1,6 @@
 import {createGallery} from './mini-pictures.js';
 import {getRandomElement} from './util.js';
-import {RANDOM_PHOTOS_COUNT} from './const.js';
+import {RANDOM_PHOTOS_COUNT, ZERO_VALUE} from './const.js';
 
 const filterSection = document.querySelector('.img-filters');
 const defaultFilter = filterSection.querySelector('#filter-default');
@@ -16,8 +16,8 @@ const initFilters = (photos) =>{
   filterSection.addEventListener('click', (evt)=> {
     const currentFilter = evt.target.closest('.img-filters__button');
     if(currentFilter !== null) {
-      const filtersBtns = filterSection.querySelectorAll('.img-filters__button');
-      filtersBtns.forEach((item)=> {
+      const filtersButtons = filterSection.querySelectorAll('.img-filters__button');
+      filtersButtons.forEach((item)=> {
         if(item.classList.contains('img-filters__button--active')){
           item.classList.remove('img-filters__button--active');
         }
@@ -29,7 +29,7 @@ const initFilters = (photos) =>{
 
 const getArrayFromRandomPhoto = (photos) => {
   const randomPhoto = getRandomElement(photos);
-  const randomPhotos = new Array(RANDOM_PHOTOS_COUNT).fill().map(()=>randomPhoto());
+  const randomPhotos = new Array(RANDOM_PHOTOS_COUNT).fill(ZERO_VALUE).map(()=>randomPhoto());
   return randomPhotos;
 };
 
@@ -39,7 +39,7 @@ const sortByComments = (photos)=> {
   return sortedArray;
 };
 
-const setDefaulFilterClick = (cb) => {
+const setDefaultFilterClick = (cb) => {
   defaultFilter.addEventListener('click', cb);
 };
 
@@ -51,4 +51,4 @@ const setDiscussedFilterClick = (cb) => {
   discussedFilter.addEventListener('click', cb);
 };
 
-export {initFilters, setDefaulFilterClick, setRandomFilterClick, setDiscussedFilterClick, getArrayFromRandomPhoto, sortByComments};
+export {initFilters, setDefaultFilterClick, setRandomFilterClick, setDiscussedFilterClick, getArrayFromRandomPhoto, sortByComments};

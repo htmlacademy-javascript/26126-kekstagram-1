@@ -10,17 +10,6 @@ const selectorImg = imgPreview.classList;
 
 const effectRadioBtns = uploadForm.querySelectorAll('.effects__radio');
 
-noUiSlider.create(effectSlider, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 1,
-  connect: 'lower',
-});
-
-
 const getUpdateSliderOptions = (effect, sliderElement) =>
   sliderElement.noUiSlider.updateOptions(Effects[effect]);
 
@@ -30,6 +19,24 @@ const resetFilter = () => {
   imgPreview.classList.replace(selectorImg, 'effects__preview--none');
 };
 
+const onEffectRadioBtnClick = (evt) => {
+  const currentRadioBtn = evt.target.closest('.effects__radio');
+  if(currentRadioBtn){
+    const effectBtnValue = currentRadioBtn.value;
+    imgPreview.classList.replace(selectorImg, getEffectSelector(effectBtnValue));
+    getUpdateSliderOptions(effectBtnValue, effectSlider);
+  }
+};
+
+noUiSlider.create(effectSlider, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 100,
+  step: 1,
+  connect: 'lower',
+});
 
 effectSlider.noUiSlider.on('update', () => {
   effectLevelInput.value = effectSlider.noUiSlider.get();
@@ -44,15 +51,6 @@ effectSlider.noUiSlider.on('update', () => {
     }
   });
 });
-
-const onEffectRadioBtnClick = (evt) => {
-  const currentRadioBtn = evt.target.closest('.effects__radio');
-  if(currentRadioBtn){
-    const effectBtnValue = currentRadioBtn.value;
-    imgPreview.classList.replace(selectorImg, getEffectSelector(effectBtnValue));
-    getUpdateSliderOptions(effectBtnValue, effectSlider);
-  }
-};
 
 
 export {onEffectRadioBtnClick, resetFilter};

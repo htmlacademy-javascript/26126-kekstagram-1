@@ -41,13 +41,10 @@ const onErrorBtnClick = () => {
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if(document.activeElement === hashtagInput || document.activeElement === commentInput){
+    const currentFocusedElement = document.activeElement;
+    if(currentFocusedElement === hashtagInput || currentFocusedElement === commentInput){
       evt.stopPropagation();
-    }
-    if(successModal !== undefined){
-      closeSuccessModal();
-    }
-    if(errorModal !== undefined){
+    } else if(successModal !== undefined || errorModal !== undefined){
       closeSuccessModal();
     } else {
       uploadForm.reset();
@@ -55,6 +52,7 @@ const onDocumentKeydown = (evt) => {
     }
   }
 };
+
 
 function closePhotoEditor () {
   uploadForm.reset();
@@ -88,27 +86,6 @@ function closeErrorModal() {
   }
 }
 
-uploadFileControl.addEventListener('change', () => {
-  if(uploadFileControl.value !== null) {
-    const file = uploadFileControl.files[0];
-    const fileName = file.name.toLowerCase();
-    const isMatches = FILE_TYPES.some((it) => fileName.endsWith(it));
-    const userFileUrl = URL.createObjectURL(file);
-    if (isMatches) {
-      preview.firstElementChild.src = userFileUrl;
-      effectsPreviews.forEach((item)=> {
-        item.style.backgroundImage = `url(${userFileUrl})`;
-      });
-    }
-    photoEditorForm.classList.remove('hidden');
-    pageBody.classList.add('modal-open');
-    addSizeBtnListeners();
-    photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
-    effectsRadioBtnList.addEventListener('click', onEffectRadioBtnClick);
-    document.addEventListener('keydown', onDocumentKeydown);
-  }
-});
-
 const isHashtagRegValid = (value) => {
   const hashtags = value.split(' ');
   const validHashtagReg = /^$|^#[a-z-а-яё0-9]{1,19}$/i;
@@ -131,10 +108,6 @@ const getDuplicateString = () => {
   const duplicatesString = duplicates.join(', ');
   return `дубликаты: ${ duplicatesString}`;
 };
-
-pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполняется в формате: #example123 или #пример123, не более 20ти символов');
-pristine.addValidator(hashtagInput, isHashtagCountValid, 'более 5ти хештегов');
-pristine.addValidator(hashtagInput, isDuplicateHashtags, getDuplicateString);
 
 const initSubmitUploadFormHandler = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
@@ -164,5 +137,30 @@ const initSubmitUploadFormHandler = (onSuccess) => {
     }
   });
 };
+
+uploadFileControl.addEventListener('change', () => {
+  if(uploadFileControl.value !== null) {
+    const file = uploadFileControl.files[0];
+    const fileName = file.name.toLowerCase();
+    const isMatches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    const userFileUrl = URL.createObjectURL(file);
+    if (isMatches) {
+      preview.firstElementChild.src = userFileUrl;
+      effectsPreviews.forEach((item)=> {
+        item.style.backgroundImage = `url(${userFileUrl})`;
+      });
+    }
+    photoEditorForm.classList.remove('hidden');
+    pageBody.classList.add('modal-open');
+    addSizeBtnListeners();
+    photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
+    effectsRadioBtnList.addEventListener('click', onEffectRadioBtnClick);
+    document.addEventListener('keydown', onDocumentKeydown);
+  }
+});
+
+pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполняется в формате: #example123 или #пример123, не более 20ти символов');
+pristine.addValidator(hashtagInput, isHashtagCountValid, 'более 5ти хештегов');
+pristine.addValidator(hashtagInput, isDuplicateHashtags, getDuplicateString);
 
 export {initSubmitUploadFormHandler, closePhotoEditor};
