@@ -12,9 +12,9 @@ const preview = document.querySelector('.img-upload__preview');
 const effectsPreviews = uploadForm.querySelectorAll('.effects__preview');
 
 const submitBtn = uploadForm.querySelector('#upload-submit');
-let successModal;
+let successModal = null;
 let successBtn;
-let errorModal;
+let errorModal = null;
 let errorBtn;
 
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
@@ -44,7 +44,7 @@ const onDocumentKeydown = (evt) => {
     const currentFocusedElement = document.activeElement;
     if(currentFocusedElement === hashtagInput || currentFocusedElement === commentInput){
       evt.stopPropagation();
-    } else if(successModal !== undefined || errorModal !== undefined){
+    } else if(successModal !== null || errorModal !== null){
       closeSuccessModal();
     } else {
       uploadForm.reset();
@@ -52,7 +52,6 @@ const onDocumentKeydown = (evt) => {
     }
   }
 };
-
 
 function closePhotoEditor () {
   uploadForm.reset();
@@ -69,8 +68,9 @@ function closePhotoEditor () {
 }
 
 function closeSuccessModal() {
-  if(successModal !== undefined){
+  if(successModal !== null){
     successModal.remove();
+    successModal = null;
     document.removeEventListener('keydown', onDocumentKeydown);
     successBtn.removeEventListener('click', onSuccessBtnClick);
     pageBody.removeEventListener('click', onSuccessBtnClick);
@@ -78,8 +78,9 @@ function closeSuccessModal() {
 }
 
 function closeErrorModal() {
-  if(errorModal !== undefined){
+  if(errorModal !== null){
     errorModal.remove();
+    errorModal = null;
     document.removeEventListener('keydown', onDocumentKeydown);
     errorBtn.removeEventListener('click', onErrorBtnClick);
     pageBody.removeEventListener('click', onErrorBtnClick);
