@@ -1,5 +1,5 @@
 import {pageBody, uploadForm, effectsRadioBtnList} from './element.js';
-import {isEscapeKey, arrayWithoutEmptyElements, showSuccessMessage,showErrorMessage, blockSubmitButton, unBlockSubmitButton} from './util.js';
+import {isEscapeKey, getArrayWithoutEmptyElements, showSuccessMessage,showErrorMessage, blockSubmitButton, unBlockSubmitButton} from './util.js';
 import {HASHTAG_MAX_COUNT, FILE_TYPES} from './const.js';
 import {removeSizeBtnLicteners, addSizeBtnListeners, resetPhotoSize} from './resize-photo.js';
 import {onEffectRadioBtnClick, resetFilter} from './slider-editor.js';
@@ -95,13 +95,13 @@ const isHashtagRegValid = (value) => {
 
 const isHashtagCountValid = (value) => {
   const hashtags = value.split(' ');
-  return arrayWithoutEmptyElements(hashtags).length <= HASHTAG_MAX_COUNT;
+  return getArrayWithoutEmptyElements(hashtags).length <= HASHTAG_MAX_COUNT;
 };
 let duplicates = [];
 
 const isDuplicateHashtags = (value) => {
   const hashtagsArray = value.toLowerCase().split(' ');
-  duplicates = arrayWithoutEmptyElements(hashtagsArray).filter((hashtag, index, array) => array.indexOf(hashtag) !== index);
+  duplicates = getArrayWithoutEmptyElements(hashtagsArray).filter((hashtag, index, array) => array.indexOf(hashtag) !== index);
   return duplicates.length <= 0;
 };
 

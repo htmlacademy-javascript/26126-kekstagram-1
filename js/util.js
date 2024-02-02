@@ -18,7 +18,7 @@ const getRandomInt = (min, max)=> {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const arrayWithoutEmptyElements = (array) => array.filter(Boolean);
+const getArrayWithoutEmptyElements = (array) => array.filter(Boolean);
 
 const getEffectSelector = (currentInputId) => {
   const selectors = {
@@ -101,4 +101,4 @@ function getRandomElement (elements) {
 }
 
 
-export {isEscapeKey, pluralize, arrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomElement};
+export {isEscapeKey, pluralize, getArrayWithoutEmptyElements, getEffectSelector, showAlert, blockSubmitButton, unBlockSubmitButton,showSuccessMessage, showErrorMessage, debounce, getRandomElement};
